@@ -25,7 +25,7 @@
     public function create($nome=null, $descricao=null){
         $query = "INSERT INTO categoria(nome_categoria, descricao) VALUES (:nome, :descricao)";
         $stmt = $this->conexao->prepare($query);
-        if(isset($nome)||isset($descricao)){
+        if(isset($nome)&&isset($descricao)){
             $stmt->execute([
                 "nome" => $nome,
                 "descricao" => $descricao
@@ -38,8 +38,8 @@
                 "descricao" => $this->descricao
             ]);
         }
-        return "Deu bom coroi";
         http_response_code(201);
+        return "Cadastrado com sucesso";
     }
 
     public function update($id, $nome=null, $descricao=null){
@@ -62,7 +62,7 @@
         return "Deletado com sucesso";
     }
 
-    public function setNomeDescricao($nome,$descricao){
+    public function setAttributes($nome,$descricao){
         $this->nome = $nome;
         $this->descricao = $descricao;
     }
