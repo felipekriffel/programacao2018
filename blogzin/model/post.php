@@ -12,13 +12,17 @@ class Post{
     }
 
 
-    public function read($idPost){
-        $query = "SELECT id_post, titulo_post, texto_post, id_categoria FROM post WHERE id_post = :id";
+    public function read($idPost=null){
+        if(isset($idPost)){
+            $query = "SELECT titulo_post, texto_post, id_categoria FROM post WHERE id_post = :id";
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindParam("id",$idPost);
+        }else{
+            $query = "SELECT titulo_post, texto_post, id_categoria FROM post";
+            $stmt = $this->conexao->prepare($query);
+        }
 
-        $stmt = $this->conexao->prepare($query);
-        $result = $stmt->execute([
-            "id" => $idPost
-        ]);
+        $result = $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -34,6 +38,7 @@ class Post{
             "id" => $idCategoria
         ]);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     public function create($titulo=null, $texto=null, $categoria=null){
@@ -42,35 +47,52 @@ class Post{
         $stmt = $this->conexao->prepare($query);
 
         if(isset($titulo)&&isset($texto)&&isset($categoria)){
-            $stmt->execute([
+            $result = $stmt->execute([
                 "titulo" => $titulo,
                 "texto" => $texto,
                 "idCategoria" => $categoria
             ]);
         }else{
+            print $this->titulo;
+            print $this->texto;
+            print $this->idCategoria;
             if(empty($this->titulo)||empty($this->texto)||empty($this->idCategoria))
                 throw new Exception("É necessário definir o título, o texto e a categoria do post");
-            $stmt->execute([
+            $result = $stmt->execute([
                 "titulo" => $this->titulo,
                 "texto" => $this->texto,
                 "idCategoria" => $this->idCategoria
             ]);    
         }
 
-        return "Cadastrado com sucesso";
+        return $result;
     }
 
     public function setAttributes($titulo, $texto, $categoria){
         $this->titulo = $titulo;
-        $this->$texto = $texto;
-        $this->$idCategoria = $categoria;
+        $this->texto = $texto;
+        $this->idCategoria = $categoria;
     }
 
-    public function update(){
-
+    public function update($id, $titulo, $texto, $idCategoria){
+        $query = "UPDATE post SET titulo_post = :titulo, texto_post = :texto, id_categoria = :idCategoria WHERE id_post = :id";
+        $stmt = $this->conexao->prepare($query);
+        $result = $stmt->execute([
+            "id" => $id,
+            "titulo" => $titulo,
+            "texto" => $texto,
+            "idCategoria" => $idCategoria
+        ]);
+        
+        return $result;
     }
 
-    public function delete(){
-
+    public function delete($id){
+        $query = "DELETE FROM post WHERE id_post = :id";
+        $stmt = $this->conexao->prepare($query);
+        $result = $stmt->execute([
+            "id" => $id
+        ]);
+        return $result;
     }
 }

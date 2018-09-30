@@ -26,23 +26,22 @@
         $query = "INSERT INTO categoria(nome_categoria, descricao) VALUES (:nome, :descricao)";
         $stmt = $this->conexao->prepare($query);
         if(isset($nome)&&isset($descricao)){
-            $stmt->execute([
+            $result = $stmt->execute([
                 "nome" => $nome,
                 "descricao" => $descricao
             ]);
         }else{
             if(empty($this->nome)||empty($this->descricao))
                 throw new Exception("É necessário definir o nome e a descricao da categoria");
-            $stmt->execute([
+            $result = $stmt->execute([
                 "nome" => $this->nome,
                 "descricao" => $this->descricao
             ]);
         }
-        http_response_code(201);
-        return "Cadastrado com sucesso";
+        return $result;
     }
 
-    public function update($id, $nome=null, $descricao=null){
+    public function update($id, $nome, $descricao){
         $query = "UPDATE categoria SET nome_categoria = :nome, descricao =:descricao WHERE id_categoria=:id";
         $stmt = $this->conexao->prepare($query);
         $result = $stmt->execute([
@@ -50,7 +49,7 @@
             "nome" => $nome,
             "descricao" => $descricao
         ]);
-        return "Atualizado com sucesso";
+        return $result;
     }
 
     public function delete($id){
@@ -59,7 +58,7 @@
         $result = $stmt->execute([
             "id" => $id
         ]);
-        return "Deletado com sucesso";
+        return $result;
     }
 
     public function setAttributes($nome,$descricao){

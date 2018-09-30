@@ -1,11 +1,10 @@
 <?php
-header("Content-Type: application/json");
+header("Content-Type: application/json;charset=utf-8");
 
 if($_SERVER['REQUEST_METHOD']!="GET"){
     die("{\"mensagem\":\"Método não suportado\"}");
 }
 
-header("Content-Type: application/json");
 include_once "../../config/conexao.php";
 include_once "../../model/categoria.php";
 
