@@ -10,7 +10,7 @@ $db = new Conexao();
 $categoria = new Categoria($db->getConexao());
 
 try{
-    $categoria->setNomeDescricao($objRecebido->nome, $objRecebido->descricao);
+    $categoria->setAttributes($objRecebido->nome, $objRecebido->descricao);
     $categoria->create();
     http_response_code(201);
     echo "{\"mensagem\": \"Cadastrado com sucesso\"}";

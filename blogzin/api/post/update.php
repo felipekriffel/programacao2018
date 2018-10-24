@@ -1,24 +1,22 @@
 <?php
-header("Content-Type: application/json");
 
-if($_SERVER['REQUEST_METHOD']!="DELETE"){
-    die("{\"mensagem\":\"Método não suportado\"}");
+if($_SERVER["REQUEST_METHOD"]!="PUT"){
+    die("{\"mensagem\":\"Método inválido\"}"); 
 }
 
-header("Content-Type: application/json");
 include_once "../../config/conexao.php";
 include_once "../../model/categoria.php";
 
 $objRecebido = json_decode(file_get_contents("php://input"));
 
+
 $db = new Conexao();
 $categoria = new Categoria($db->getConexao());
 
 try{
-    $id = $objRecebido->id;
-    $response = $categoria->delete($id);
+    $response = $categoria->update($objRecebido->id, $objRecebido->titulo, $objRecebido->texto, $objRecebido->idCategoria);
     http_response_code(200);
     echo $response;
-}catch(Exception $e){
+}catch(Error $e){
     echo "Erro: ".$e;
 }
