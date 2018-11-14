@@ -17,15 +17,14 @@ class Post{
             $query = "SELECT p.titulo_post, p.texto_post, p.id_categoria, c.nome_categoria FROM post p 
                 WHERE p.id_post = :id 
                 INNER JOIN categoria c
-                ON p.id_categoria = c.id_categoria
-                ORDER BY p.titulo_post DESC";
+                ON p.id_categoria = c.id_categoria";
             $stmt = $this->conexao->prepare($query);
             $stmt->bindParam("id",$idPost);
         }else{
-            $query = "SELECT p.titulo_post, p.texto_post, p.id_categoria, c.nome_categoria FROM post p
+            $query = "SELECT p.id_post, p.titulo_post, p.texto_post, p.id_categoria, c.nome_categoria FROM post p
             INNER JOIN categoria c
             ON p.id_categoria = c.id_categoria
-            ORDER BY p.titulo_post DESC";
+            ORDER BY p.id_post DESC";
             $stmt = $this->conexao->prepare($query);
         }
 
