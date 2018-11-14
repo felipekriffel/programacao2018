@@ -100,4 +100,48 @@ main section article h1{
     min-height: 87vh;
     overflow-y: scroll;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-detail .header{
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-detail h1{
+    
+    font-size: 1.5em;
+    margin-left: 1.5em;
+}
+
+.post-detail button{
+    height: 70%;
+    padding: 0;
+    background-color: dodgerblue;
+    width: 2em;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.post-detail p{
+    flex-grow: 1;
+    margin-left: 2em
+}
+
+.post-detail .footer{
+    height: 10vh;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center
+}
+
+.post-detail .footer span{
+    margin-right: 1.5em;
 }

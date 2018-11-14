@@ -2,11 +2,13 @@ var divCategoria = document.querySelector(".lista-categorias ol")
 var divPosts = document.querySelector("section.posts")
 var divPostDetail = document.querySelector("section.post-detail")
 
+divPostDetail.querySelector("button").addEventListener("click", switchPostDetail)
+
 function switchPostDetail(){
-    if(divPostDetail.style.width=="70%"){
+    if(divPostDetail.style.width=="70vw"){
         divPostDetail.style.width="0"        
     }else{
-        divPostDetail.style.width="70%"
+        divPostDetail.style.width="70vw"
     }
 }
 
@@ -44,7 +46,13 @@ async function requestPosts() {
         texto.innerText = post.texto_post
         artigo.dataset.idPost = post.id_post
 
+        titulo.addEventListener("click", requestPostDetail)
+            // console.log(ev.currentTarget.parentNode.dataset.idPost)
+            // let request = await fetch("../../api/post/read.php?idPost="+ev.currentTarget.parentNode.dataset.idPost, { method: 'GET'})
+            // let postObject = await request.json()
+            // console.log(postObject[0])
 
+        // })
 
         artigo.appendChild(titulo)
         artigo.appendChild(texto)
@@ -69,12 +77,32 @@ async function requestPostsCategoria(idCat){
         texto.innerText = post.texto_post
         artigo.dataset.idPost = post.id_post
         
+        titulo.addEventListener("click",requestPostDetail)
 
         artigo.appendChild(titulo)
         artigo.appendChild(texto)
         
         divPosts.appendChild(artigo)
     });
+}
+
+async function requestPostDetail(ev){
+    console.log(ev.currentTarget.parentNode.dataset.idPost)
+    let request = await fetch("../../api/post/read.php?idPost="+ev.currentTarget.parentNode.dataset.idPost, { method: 'GET'})
+    let postObject = await request.json()
+    console.log(postObject[0])
+
+
+    divPostDetail.children[0].children[0].innerText = postObject[0].titulo_post
+    divPostDetail.children[1].innerText = postObject[0].texto_post
+
+    let categoria = document.createElement("span")
+    categoria.innerText = postObject[0].nome_categoria
+
+    divPostDetail.children[2].innerHTML=""
+    divPostDetail.children[2].appendChild(categoria)
+
+    switchPostDetail()
 }
 
 requestPosts()

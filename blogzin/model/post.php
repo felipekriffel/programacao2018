@@ -15,9 +15,9 @@ class Post{
     public function read($idPost=null){
         if(isset($idPost)){
             $query = "SELECT p.titulo_post, p.texto_post, p.id_categoria, c.nome_categoria FROM post p 
-                WHERE p.id_post = :id 
                 INNER JOIN categoria c
-                ON p.id_categoria = c.id_categoria";
+                ON p.id_categoria = c.id_categoria
+                WHERE p.id_post = :id";
             $stmt = $this->conexao->prepare($query);
             $stmt->bindParam("id",$idPost);
         }else{

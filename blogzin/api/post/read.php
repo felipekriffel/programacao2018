@@ -8,8 +8,11 @@ if($_SERVER['REQUEST_METHOD']!="GET"){
 include_once "../../config/conexao.php";
 include_once "../../model/post.php";
 
-$idPost = $_GET["idPost"];
-$idCategoria = $_GET["idCategoria"];
+$idPost = null;
+$idCategoria = null;
+
+if(!empty($_GET["idPost"]))$idPost = $_GET["idPost"];
+if(!empty($_GET["idCategoria"]))$idCategoria = $_GET["idCategoria"];
 
 $db = new Conexao();
 $post = new Post($db->getConexao());
