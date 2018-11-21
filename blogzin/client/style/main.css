@@ -17,13 +17,18 @@ header{
     background-color: dodgerblue;
     display: flex;
     align-items: center;
-    padding: 0 0 0 1em
+    padding: 0 1em 0 1em;
+    justify-content: space-between
 }
 
 header h1{
     margin: 0;
     font-size: 1.7em;
     display: inline-block;
+    color: rgba(255, 255, 255, 0.95)
+}
+
+header .tempo{
     color: rgba(255, 255, 255, 0.95)
 }
 
@@ -145,3 +150,4 @@ main section article h1{
 .post-detail .footer span{
     margin-right: 1.5em;
 }
+

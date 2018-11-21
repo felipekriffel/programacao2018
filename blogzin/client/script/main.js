@@ -105,5 +105,19 @@ async function requestPostDetail(ev){
     switchPostDetail()
 }
 
+async function requestWeatherData(lat, lng){
+    navigator.geolocation.getCurrentPosition(async pos=>{
+        let request = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&lang=pt&APPID=c144ba4eaa5f0aebc01c661169701dc7`,{mode: "cors"})
+        let data = await request.json()
+        let widget = document.querySelector("header .tempo")
+        widget.querySelector("p").innerText = `${data.name} ${data.main.temp}º`
+    })
+
+}
+
+navigator.geolocation.getCurrentPosition(pos=>{
+    requestWeatherData(pos.coords.latitude, pos.coords.longitude)
+})
+
 requestPosts()
 requestCategories()
